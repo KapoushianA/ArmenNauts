@@ -8,7 +8,7 @@ var game = {
 		score : 0,
                 enemyBaseHealth: 10,
                 playerBaseHealth: 10,
-                enemyCreepHealth: 10,
+                enemyCreepHealth: 1,
                 playerHealth: 10,
                 enemyCreepAttack: 1,
                 playerAttack: 1,
@@ -65,6 +65,6 @@ var game = {
 		me.state.set(me.state.PLAY, new game.PlayScreen());
 
 		// Start the game.
-		me.state.change(me.state.PLAY);
+		me.state.change(me.state.MENU);
 	}
 };
