@@ -7,7 +7,7 @@ var game = {
 		// score
 		score : 0,
                 enemyBaseHealth: 10,
-                playerBaseHealth: 10,
+                playerBaseHealth: 40,
                 enemyCreepHealth: 1,
                 playerHealth: 10,
                 enemyCreepAttack: 1,
@@ -21,7 +21,13 @@ var game = {
                 playerMoveSpeed: 5,
                 creepMoveSpeed: 5,
                 gameManager: "",
-                player: ""
+                player: "",
+                exp: 0,
+                gold: 0,
+                exp1: 0,
+                exp2: 0,
+                exp3: 0,
+                exp4: 0
 	},
 	
 	
