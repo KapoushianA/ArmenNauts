@@ -21,6 +21,9 @@ game.PlayerBaseEntity = me.Entity.extend({
         this.renderable.setCurrentAnimation("idle");
 
     },
+    
+    
+    
     update: function(delta) {
         if (this.health <= 0) {
             this.broken = true;
