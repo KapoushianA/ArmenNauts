@@ -9,14 +9,13 @@ game.TitleScreen = me.ScreenObject.extend({
                 
                 me.game.world.addChild(new (me.Renderable.extend({
                     init: function(){
-                        this._super(me.Renderable, 'init', [510, 30, 50]);
+                        this._super(me.Renderable, 'init', [510, 30, 250, 50]);
                         this.font = new me.Font("Arial", 46, "white");
                     },
                     
                     draw: function(renderer){
                         this.font.draw(renderer.getContext(), "START A NEW GAME", this.pos.x, this.pos.y);
-                        this.font.draw(renderer.getContext(), "Press ENTER to play!", 250, 530);
-                        me.input.registerPointerEvent('pointerdown', this, this.newGame.bind(this), true)
+                        me.input.registerPointerEvent('pointerdown', this, this.newGame.bind(this), true);
                     },
                     
                     update: function(dt){
@@ -50,6 +49,11 @@ game.TitleScreen = me.ScreenObject.extend({
                     },
                     
                     newGame: function(){
+                        game.data.exp = me.save.exp;
+                        game.data.exp1 = me.save.exp1;
+                        game.data.exp2 = me.save.exp2;
+                        game.data.exp3 = me.save.exp3;
+                        game.data.exp4 = me.save.exp4;                       
                         me.input.releasePointerEvent('pointerdown', this);
                         me.state.change(me.state.PLAY);
                     }
