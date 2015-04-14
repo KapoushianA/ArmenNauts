@@ -9,13 +9,13 @@ game.SpendExp = me.ScreenObject.extend({
                 
                 me.game.world.addChild(new (me.Renderable.extend({
                     init: function(){
-                        this._super(me.Renderable, 'init', [510, 30, 250, 50]);
+                        this._super(me.Renderable, 'init', [10, 10, 250, 50]);
                         this.font = new me.Font("Arial", 46, "white");
                     },
                     draw: function(renderer){
-                        this.font.draw(renderer.getContext(), "SPEND", this.pos.x, this.pos.y);
-                    }
-                    
+                        this.font.draw(renderer.getContext(), "PRESS F1-F4 TO BUY, F5 TO SKIP", this.pos.x, this.pos.y);
+                       this.font.draw(renderer.getContext(), "CURRENT EXP: " + game.data.exp.toString(), this.pos.x + 100, this.pos.y + 50);
+                   }
                 })));
                                  
         },
