@@ -33,9 +33,9 @@ if ($query->num_rows == 1) {
     }
     //this echo comes up when the username and password is invalid//
     else {
-        echo "<p>Invalid username and password1</p>";
+        echo "Invalid username and password1";
     }
 } else {
     //this is like the same one from up top//
-    echo "<p> Invalid username and password2</p>";
+    echo "Invalid username and password2";
 }
