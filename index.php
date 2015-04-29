@@ -14,7 +14,7 @@ require_once("php/controller/create-db.php");
         <link rel="apple-touch-icon" sizes="76x76" href="icons/touch-icon-ipad-76x76.png">
         <link rel="apple-touch-icon" sizes="120x120" href="icons/touch-icon-iphone-retina-120x120.png">
         <link rel="apple-touch-icon" sizes="152x152" href="icons/touch-icon-ipad-retina-152x152.png">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     </head>
@@ -74,7 +74,7 @@ require_once("php/controller/create-db.php");
                             // Mobile browser hacks
                             if (me.device.isMobile && !navigator.isCocoonJS) {
                     // Prevent the webview from moving on a swipe
-                    window.document.addEventListener("touchmove", function (e) {
+                    window.document.addEventListener("touchmove", function(e) {
                     e.preventDefault();
                             window.scroll(0, 0);
                             return false;
@@ -84,68 +84,65 @@ require_once("php/controller/create-db.php");
                                     window.scrollTo(0, 1);
                                             me.video.onresize(null);
                                     }).defer();
-                                    me.event.subscribe(me.event.WINDOW_ONRESIZE, function (e) {
+                                    me.event.subscribe(me.event.WINDOW_ONRESIZE, function(e) {
                                     window.scrollTo(0, 1);
                                     });
                             }
-                            });        </script>
+                            });</script>
 
         <script>
-                            $("#mainmenu").bind("click", function(){
-                    me.state.change(me.state.MENU);
+            $("#mainmenu").bind("click", function(){
+                me.state.change(me.state.MENU);
+            });
+            $("#register").bind("click", function(){
+                $.ajax({
+                    type: "POST",
+                    url: "php/controller/create-user.php",
+                    data:{
+                        username: $("#username").val(),
+                        password: $("#password").val()
+                    },
+                            dataType: "text"
+                    })
+
+                    .success(function(response){
+                    if (response==="true"){
+                    me.state.change(me.state.PLAY);
+                    } else{
+                    alert(response);
+                    }
+                    })
+                            .fail(function(response){
+                    alert("Fail");
                     });
-                            $("#register").bind("click", function(){
+                    });
+                            $("#load").bind("click", function(){
                     $.ajax({
                     type: "POST",
-                            url: "php/controller/create-user.php",
+                            url: "php/controller/login-user.php",
                             data:{
                             username: $("#username").val(),
-                                    password: $(#"password").val()
+                                    password: $("#password").val()
                             },
                             dataType: "text"
                     })
 
-                            .success(function(response)){
-                                if(reponse === "true"){
-                                    me.state.change(me.state.PLAY);
-                                }else{
-                                    alert(response);
-                                }
+                            .success(function(response){
+                    if (response === "Invalid username and password"){
+                    alert(response);
+                    }else{
+                    var data = jQuery.parseJSON(response);
+                            game.data.exp = data["exp"];
+                            game.data.exp1 = data["exp1"];
+                            game.data.exp2 = data["exp2"];
+                            game.data.exp3 = data["exp3"];
+                            game.data.exp4 = data["exp4"];
+                            me.state.change(me.state.SPENDEXP);
+                    }
                     })
-                            .fail(function(respoonse)){
-                                alert("Fail");
-                    })
+                    .fail(function(response){
+                    //alert("Fail");
                     });
-                    
-                    $("#load").bind("click", function(){
-                    $.ajax({
-                    type: "POST",
-                            url: "php/controller/load-user.php",
-                            data:{
-                            username: $("#username").val(),
-                                    password: $(#"password").val()
-                            },
-                            dataType: "text"
-                    })
-
-                            .success(function(response)){
-                                if(reponse === "Invalid username and password"){
-                                    alert(response);
-                                   
-                                }else{
-                                    var data = jQuery.parseJSON(response);
-                                    game.data.exp = data["exp"];
-                                    game.data.exp = data["exp1"];
-                                    game.data.exp = data["exp2"];
-                                    game.data.exp = data["exp3"];
-                                    game.data.exp = data["exp4"];
-                                    
-                                     me.state.change(me.state.SPENDEXP);
-                                }
-                    })
-                            .fail(function(respoonse)){
-                                alert("Fail");
-                    })
                     });
         </script>
     </body>

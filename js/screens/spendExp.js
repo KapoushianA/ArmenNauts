@@ -4,19 +4,23 @@ game.SpendExp = me.ScreenObject.extend({
 	 */
 	onResetEvent: function() {	
 		me.game.world.addChild(new me.Sprite(0, 0, me.loader.getImage('exp-screen')), -10); // TODO
-	
+	        // inputs the keys 
                 me.input.bindKey(me.input.KEY.F1, "F1");
                 me.input.bindKey(me.input.KEY.F2, "F2");
                 me.input.bindKey(me.input.KEY.F3, "F3");
                 me.input.bindKey(me.input.KEY.F4, "F4");
                 me.input.bindKey(me.input.KEY.F5, "F5");
-                var exp1cost = ((game.data.exp1 + 1) * 10);
+                var exp1cost = ((Number(game.data.exp1) + 1) * 10);
+                var exp2cost = ((game.data.exp2 + 1) * 10);
+                var exp3cost = ((game.data.exp3 + 1) * 10);
+                var exp4cost = ((game.data.exp4 + 1) * 10);
                 
                 me.game.world.addChild(new (me.Renderable.extend({
                     init: function(){
                         this._super(me.Renderable, 'init', [10, 10, 250, 50]);
                         this.font = new me.Font("Arial", 23, "white");
                     },
+                    // sets text for spending exp
                     draw: function(renderer){
                        this.font.draw(renderer.getContext(), "PRESS F1-F4 TO BUY, F5 TO SKIP", this.pos.x, this.pos.y);
                        this.font.draw(renderer.getContext(), "CURRENT EXP: " + game.data.exp.toString(), this.pos.x , this.pos.y + 50);
@@ -27,21 +31,30 @@ game.SpendExp = me.ScreenObject.extend({
                     }
                 })));
             this.handler = me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge){
+                //checks if you could afford to upgrade the exp.
                 if(action === "F1"){
                     if(game.data.exp >= exp1cost){
                        game.data.exp1 += 1;
                        game.data.exp -= exp1cost;
-                       me.state.change(me.state.PLAY);
                        console.log("purchased");
                     }else{
                         console.log("not enough experience");
                     }
                 }else if(action === "F2"){
-                    
+                    if (game.data.exp >= exp2cost){
+                        game.data.exp2 += 1;
+                        game.data.exp -= exp2cost;
+                    }
                 }else if(action === "F3"){
-                    
+                    if (game.data.exp >= exp3cost){
+                        game.data.exp2 += 1;
+                        game.data.exp -= exp3cost;
+                    }
                 }else if(action === "F4"){
-                    
+                    if (game.data.exp >= exp4cost){
+                        game.data.exp2 += 1;
+                        game.data.exp -= exp4cost;
+                    }
                 }else if(action === "F5"){
                   me.state.change(me.state.PLAY);  
                 }
@@ -53,6 +66,7 @@ game.SpendExp = me.ScreenObject.extend({
 	 *  action to perform when leaving this screen (state change)
 	 */
 	onDestroyEvent: function() {
+            //makes sure you cant use these keys again.
               me.input.unbindKey(me.input.KEY.F1, "F1");
               me.input.unbindKey(me.input.KEY.F2, "F2");
               me.input.unbindKey(me.input.KEY.F3, "F3");

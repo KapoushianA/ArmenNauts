@@ -10,17 +10,19 @@ game.SpendGold = Object.extend({
    
    update: function(){
        this.now = new Date().getTime();
-       
+       //checks if you pressed the buy key so you could go shopping
        if(me.input.isKeyPressed("buy") && this.now-this.lastBuy >=1000){
            this.lastBuy = this.now;
            if(!this.buying){
+               //makes you buy
                this.startBuying();
            }else{
+               //stops you from buying
                this.stopBuying();
            }
            
        }
-       
+       //it checks the buy keys
        this.checkBuyKeys();
        
        return true;
@@ -28,14 +30,18 @@ game.SpendGold = Object.extend({
    
    startBuying: function(){
        this.buying = true;
+       //it pauses  the gaame
        me.state.pause(me.state.play);
        game.data.pausePos = me.game.viewport.localToWorld(0, 0);
+       //it pulls the buyscreen background
        game.data.buyscreen = new me.Sprite(game.data.pausePos.x, game.data.pausePos.y, me.loader.getImage('gold-screen'));
        game.data.buyscreen.updateWhenPaused = true;
+       //makes the buy screen see through
        game.data.buyscreen.setOpacity(0.8);
        me.game.world.addChild(game.data.buyscreen, 34);
        game.data.player.body.setVelocity(0, 0);
        me.state.pause(me.state.PLAY);
+       //it inputs the keys for you to buy powerup
        me.input.bindKey(me.input.KEY.F1, "F1", true);
        me.input.bindKey(me.input.KEY.F2, "F2", true);
        me.input.bindKey(me.input.KEY.F3, "F3", true);
@@ -53,6 +59,7 @@ game.SpendGold = Object.extend({
                         this.updateWhenPaused = true;
                         this.alwaysUpdate = true;
                     },
+                    //sets the keys to do stuff like buying some MLG POWER UPS
                     draw: function(renderer){
                        this.font.draw(renderer.getContext(), "PRESS F1-F6 TO BUY, B TO EXIT. Current Gold: " + game.data.gold, this.pos.x, this.pos.y);
                        this.font.draw(renderer.getContext(), "Skill 1: Increase Damage. Current Level: " + game.data.skill1 + "Cost: " +((game.data.skill1 + 1) * 10), this.pos.x + 150, this.pos.y + 50);
@@ -68,9 +75,13 @@ game.SpendGold = Object.extend({
    
    stopBuying: function(){
        this.buying = false;
+       //unpauses the game
        me.state.resume(me.state.play);
+       //sets it so you could move again
        game.data.player.body.setVelocity(game.data.playerMoveSpeed, 20);
+       //removes the buy screen
        me.game.world.removeChild(game.data.buyscreen);
+       //unbinds the keys
        me.input.unbindKey(me.input.KEY.F1, "F1", true);
        me.input.unbindKey(me.input.KEY.F2, "F2", true);
        me.input.unbindKey(me.input.KEY.F3, "F3", true);
@@ -79,7 +90,7 @@ game.SpendGold = Object.extend({
        me.input.unbindKey(me.input.KEY.F6, "F6", true);
        me.game.world.removeChild(game.data.buytext);
    },
-   
+   //check if you bought stuff
    checkBuyKeys: function(){
        if(me.input.isKeyPressed("F1")){
            if(this.checkCost(1)){
@@ -107,7 +118,7 @@ game.SpendGold = Object.extend({
            }
        }
    },
-   
+   //changes the price of the power up
    checkCost: function(skill){
       if(skill ===1 && (game.data.gold >= ((game.data.skill1 + 1) * 10))){
           return true;
@@ -125,7 +136,7 @@ game.SpendGold = Object.extend({
           return false;
        }
    },
-   
+   //sets the price for the power up
    makePurchase: function(skill){
       if(skill === 1){
       game.data.gold -= ((game.data.skill1 + 1) * 10);
