@@ -6,13 +6,12 @@ game.GameTimerManager = Object.extend({
         this.alwaysUpdate = true;
 
     },
-    
     update: function() {
         this.now = new Date().getTime();
         this.goldTimerCheck(this.now);
         this.creepTimerCheck();
  
- 
+        //this code makes me get code
         if (Math.round(this.now / 1000) % 10 === 0 && (this.now - this.lastCreep >= 1000)) {
             this.lastCreep = this.now;
             var creepe = me.pool.pull("EnemyCreep", 1000, 0, {});
@@ -20,7 +19,7 @@ game.GameTimerManager = Object.extend({
         }
         return true;
     },
-    
+    //helps with my more gold power up
     goldTimerCheck: function(){
          if (Math.round(this.now / 1000) % 20 === 0 && (this.now - this.lastCreep >= 1000)) {
             game.data.gold += (game.data.exp1+1);

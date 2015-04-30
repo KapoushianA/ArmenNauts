@@ -4,6 +4,7 @@ game.ExperienceManager = Object.extend({
         this.alwaysUpdate = true;
         this.gameover = false;
     },
+    //gives the alert if you win or lose
     update: function() {
         if (game.data.win === true && !this.gameover) {
             this.gameOver(true);
@@ -24,6 +25,7 @@ game.ExperienceManager = Object.extend({
         console.log(game.data.exp);
         this.gameover = true;
         me.save.exp = game.data.exp;
+        //this gets my register to work if somwthing is wrong it wont sign you in
         $("#register").bind("click", function() {
             $.ajax({
                 type: "POST",

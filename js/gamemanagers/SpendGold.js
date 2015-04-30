@@ -30,7 +30,7 @@ game.SpendGold = Object.extend({
    
    startBuying: function(){
        this.buying = true;
-       //it pauses  the gaame
+       //it pauses  the game
        me.state.pause(me.state.play);
        game.data.pausePos = me.game.viewport.localToWorld(0, 0);
        //it pulls the buyscreen background
