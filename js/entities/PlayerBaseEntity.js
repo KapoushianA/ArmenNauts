@@ -16,6 +16,7 @@ game.PlayerBaseEntity = me.Entity.extend({
         this.body.onCollision = this.onCollision.bind(this);
         this.type = "PlayerBase";
 
+        // animations for my base being destroyed
         this.renderable.addAnimation("idle", [0]);
         this.renderable.addAnimation("broken", [1]);
         this.renderable.setCurrentAnimation("idle");
@@ -36,10 +37,12 @@ game.PlayerBaseEntity = me.Entity.extend({
         return true;
     },
     
+    //makes my base lose health
     loseHealth: function(damage){
         this.health = this.health - damage;
     },
     
+    //puts collision on my base for enemys to attack
     onCollision: function() {
 
     }

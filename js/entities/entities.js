@@ -38,6 +38,7 @@ game.PlayerEntity = me.Entity.extend({
         this.dead = false;
         this.attacking = false;
     },
+    //walk, attack animations
     addAnimation: function() {
         this.renderable.addAnimation("idle", [78]);
         this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80);
@@ -53,6 +54,7 @@ game.PlayerEntity = me.Entity.extend({
         this._super(me.Entity, "update", [delta]);
         return true;
     },
+    //makes sure people are dead
     checkIfDead: function() {
         if (this.health <= 0)
             return true;

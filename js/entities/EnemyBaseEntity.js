@@ -16,6 +16,7 @@ game.EnemyBaseEntity = me.Entity.extend({
         this.body.onCollision = this.onCollision.bind(this);
         this.type = "EnemyBaseEntity";
 
+        // animations for destroying the base
         this.renderable.addAnimation("idle", [0]);
         this.renderable.addAnimation("broken", [1]);
         this.renderable.setCurrentAnimation("idle");
@@ -28,13 +29,15 @@ game.EnemyBaseEntity = me.Entity.extend({
             this.renderable.setCurrentAnimation("broken");
         }
         this.body.update(delta);
-
+        
         this._super(me.Entity, "update", [delta]);
         return true;
     },
+    //sets up collision
     onCollision: function() {
 
     },
+    //this code makes the base lose health when hit
     loseHealth: function() {
         this.health--;
     }
